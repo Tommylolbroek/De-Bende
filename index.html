@@ -534,14 +534,16 @@
             <path d="M 10 100 Q 30 10 50 10 Q 70 10 90 100 Z" fill="#000" />
         </svg>
 
-        <!-- Overwinning: Groepsfoto -->
-        <svg id="scene-win" class="scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-            <rect width="100" height="100" fill="#81c784" />
-            <polygon points="0,0 100,0 100,100 0,100" fill="#ffeb3b" opacity="0.2" />
-            <circle cx="50" cy="0" r="40" fill="#4caf50" opacity="0.5" />
-            <rect y="60" width="100" height="40" fill="#4caf50" />
-            <g id="win-group"></g>
-        </svg>
+        <!-- Overwinning: Groepsfoto / Einde.png -->
+        <div id="scene-win" class="scene">
+            <svg id="fallback-win" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%;">
+                <rect width="100" height="100" fill="#81c784" />
+                <polygon points="0,0 100,0 100,100 0,100" fill="#ffeb3b" opacity="0.2" />
+                <circle cx="50" cy="0" r="40" fill="#4caf50" opacity="0.5" />
+                <rect y="60" width="100" height="40" fill="#4caf50" />
+                <g id="win-group"></g>
+            </svg>
+        </div>
 
         <div id="scanlines"></div>
 
@@ -607,14 +609,15 @@
     </div>
 
     <script>
-        // --- PRELOAD MULTIPLE IMGUR IMAGES ---
+        // --- PRELOAD MULTIPLE IMAGES ---
         let imagesLoaded = 0;
-        const totalImages = 3;
+        const totalImages = 4;
 
         const imgUrls = {
             menu: 'https://i.imgur.com/SqKgNdV.jpg',  // De startscherm foto
             fork: 'https://i.imgur.com/gE8Xoia.png',  // Splitsing afbeelding
-            gameover: 'https://i.imgur.com/ZjerXTN.png' // Game Over afbeelding
+            gameover: 'https://i.imgur.com/ZjerXTN.png', // Game Over afbeelding
+            win: 'images/Einde.png'                     // Eindscherm foto uit de map images
         };
 
         function preloadImgur() {
