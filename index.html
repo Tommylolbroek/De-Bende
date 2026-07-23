@@ -611,20 +611,22 @@
     <script>
         // --- PRELOAD MULTIPLE IMAGES ---
         let imagesLoaded = 0;
-        const totalImages = 4;
+        const totalImages = 5;
 
         const imgUrls = {
             menu: 'https://i.imgur.com/SqKgNdV.jpg',  // De startscherm foto
             fork: 'https://i.imgur.com/gE8Xoia.png',  // Splitsing afbeelding
             gameover: 'https://i.imgur.com/ZjerXTN.png', // Game Over afbeelding
-            win: 'images/Einde.png'                     // Eindscherm foto uit de map images
+            win: 'images/Einde.png',                    // Eindscherm foto uit de map images
+            beer: 'images/beer.png'                     // Jumpscare foto uit de map images
         };
 
         function preloadImgur() {
             Object.keys(imgUrls).forEach(key => {
                 const img = new Image();
                 img.onload = () => {
-                    document.getElementById(`scene-${key}`).style.backgroundImage = `url('${imgUrls[key]}')`;
+                    const sceneEl = document.getElementById(`scene-${key}`);
+                    if (sceneEl) sceneEl.style.backgroundImage = `url('${imgUrls[key]}')`;
                     const fallback = document.getElementById(`fallback-${key}`);
                     if (fallback) fallback.style.display = 'none';
                     checkAllLoaded();
@@ -1251,18 +1253,19 @@
         function triggerJumpscare(msg, monsterType) {
             stopMusic();
             
-            // Vul de jumpscare overlay met de bijbehorende monster SVG
-            document.getElementById('jumpscare-overlay').innerHTML = monsterSVGs[monsterType];
+            // Vul de jumpscare overlay met beer.png uit de map images (met automatische fallback op SVG)
+            const overlay = document.getElementById('jumpscare-overlay');
+            overlay.innerHTML = `<img src="images/beer.png" class="jumpscare-monster" style="object-fit: contain;" onerror="this.outerHTML=monsterSVGs['${monsterType}']">`;
             
             // Activeer jumpscare overlay en shake effect
-            document.getElementById('jumpscare-overlay').classList.add('active');
+            overlay.classList.add('active');
             document.getElementById('game-screen').classList.add('shake');
             
             playJumpscareSound(monsterType);
 
             setTimeout(() => {
                 // Zet overlay en shake weer uit na 1.2 seconden
-                document.getElementById('jumpscare-overlay').classList.remove('active');
+                overlay.classList.remove('active');
                 document.getElementById('game-screen').classList.remove('shake');
                 
                 // Start de muziek weer op (enger/sneller tempo)
